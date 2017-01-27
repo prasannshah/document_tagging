@@ -1,0 +1,11 @@
+<div class="nested-fields" style="display: flex; align-items: center;">
+  <div class="field" style="flex: 0">
+    <%= f.label :page_number %>
+    <%= f.number_field :page_number%>
+  </div>
+  <div class="field" style="flex: 2 1 0">
+    <%= f.label :tag %>
+    <%= f.select :tag, @all_tags, {include_blank: true}, class: 'select2' %>
+  </div>
+  <%= link_to_remove_association "remove", f %>
+</div>

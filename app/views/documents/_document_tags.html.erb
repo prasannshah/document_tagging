@@ -1,0 +1,15 @@
+<%= form_for @document do |f| %>
+  <div>Shipment: #<%= @document.shipment_id %></div>
+  <div>Original Tags: <%= @document.original_tags %> </div>
+  <h2>Add Tags</h2>
+  <div>
+    <%= f.fields_for :document_tags do |tag|
+      render 'document_tag_fields', f: tag
+    end %>
+    <div class="links">
+      <%= link_to_add_association 'add tag', f, :document_tags %>
+    </div>
+  </div>
+  <br>
+  <%= f.submit %>
+<% end %>

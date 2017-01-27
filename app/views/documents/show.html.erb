@@ -1,0 +1,19 @@
+<%= link_to 'Back', documents_path %>
+
+<div style="display: flex">
+  <div style="width: 60vw; margin: 8px">
+    <% if @document_content_type == 'IMAGE' %>
+      <img src="<%= @document.file.url %>" style="margin-left: auto; max-width: 100%;display: inherit;max-height: 100%;margin-right: auto;vertical-align: middle;">
+    <% else %>
+      <iframe class="preview" src="<%= @document.file.url %>" style="width: 100%; height: 88vh" type="application/pdf"></iframe>
+    <% end %>
+  </div>
+  <div style="width: 35vw">
+    <div id="notice"><%= notice %></div>
+    <%= form_for Tag.new, remote: true, style: 'float: right' do |f| %>
+        <%= f.text_field :name %>
+        <%= f.submit %>
+    <% end %>
+    <%= render 'document_tags' %>
+  </div>
+</div>

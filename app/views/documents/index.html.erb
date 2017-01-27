@@ -1,0 +1,23 @@
+<div id="notice"><%= notice %></div>
+
+<h1>Documents</h1>
+
+<table id="hor-minimalist-b">
+  <thead>
+    <tr>
+      <th>Document Id</th>
+      <th>Shipment Id</th>
+      <th>Original Tags</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= link_to document.id, document %></td>
+        <td><%= document.shipment_id %></td>
+        <td><%= document.original_tags %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
