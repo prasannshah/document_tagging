@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.includes(:document_tags).where( :document_tags => { :document_id => nil } ).limit(10)
+    @documents = Document.includes(:document_tags).where( :document_tags => { :document_id => nil } ).order("RANDOM()").limit(100)
   end
 
   # GET /documents/1
@@ -21,7 +21,7 @@ class DocumentsController < ApplicationController
       else
         'TEXT'
     end
-    @all_tags = Tag.all.map {|t| t.name }
+    @all_tags = Tag.all.order(:name).map {|t| t.name }
     page_count.times { |i| @document.document_tags.build(page_number: i+1) }
   end
 
@@ -55,10 +55,11 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to documents_url, notice: 'Document was successfully updated.' }
+        new_document = Document.includes(:document_tags).where( :document_tags => { :document_id => nil } ).order("RANDOM()").limit(1).first
+        format.html { redirect_to document_url(new_document), notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }
       else
-        @all_tags = Tag.all.map {|t| t.name }
+        @all_tags = Tag.all.order(:name).map {|t| t.name }
         format.html { render :show }
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
