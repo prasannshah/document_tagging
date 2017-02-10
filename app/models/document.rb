@@ -18,7 +18,10 @@ class Document < ApplicationRecord
           next if file == '.' or file == '..' or file == '.DS_Store'
           extension = File.extname("uploaded_documents/#{shipment_id}/#{original_tag}/#{file}")
           next if extension =~ /[0-9]$/
-          Document.create!(shipment_id: shipment_id, original_tags: original_tag, file: File.open("uploaded_documents/#{shipment_id}/#{original_tag}/#{file}"))
+	  next if extension =~ /msg$/
+          file = File.open("uploaded_documents/#{shipment_id}/#{original_tag}/#{file}")
+	  next if file.size == 0
+	  Document.create!(shipment_id: shipment_id, original_tags: original_tag, file: file)
         end
       end
     end
